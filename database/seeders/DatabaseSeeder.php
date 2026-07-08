@@ -159,10 +159,10 @@ class DatabaseSeeder extends Seeder
                 'cliente_nombre' => 'Empresa ABC S.A.',
                 'cliente_email' => 'contacto@empresaabc.com',
                 'cliente_empresa' => 'Empresa ABC S.A. de C.V.',
-                'participantes' => json_encode(['Ana García', 'Carlos López', 'Juan Cliente']),
+                'participantes' => ['Ana García', 'Carlos López', 'Juan Cliente'],
                 'notas' => 'Se acordó usar el modelo CFDI 4.0 con complementos de pago. La firma digital se realizará vía API del proveedor certificado.',
                 'firmas' => 'firma_electronica_abc_2024.pdf',
-                'acuerdos' => json_encode(['Usar CFDI 4.0', 'Entrega semanal de demos', 'Reunión bisemanal']),
+                'acuerdos' => ['Usar CFDI 4.0', 'Entrega semanal de demos', 'Reunión bisemanal'],
                 'fecha_firma_acta' => now()->subMonths(2)->addDays(7)->format('Y-m-d'),
                 'estado_firma' => 'firmado',
             ]
@@ -174,133 +174,70 @@ class DatabaseSeeder extends Seeder
             ['description' => 'Tablas y relaciones para el módulo de facturación', 'status' => 'completada', 'tiempo_estimado_horas' => 20, 'tiempo_real_horas' => 18, 'asignado_a' => $dev->id]
         );
 
-        Activity::create([
-            'requirement_id' => $req1->id,
-            'title' => 'Implementación de API de facturación',
-            'description' => 'REST API endpoints para creación/consulta de facturas',
-            'status' => 'completada',
-            'tiempo_estimado_horas' => 40,
-            'tiempo_real_horas' => 42,
-            'asignado_a' => $dev2->id,
-        ]);
+        $act2 = Activity::firstOrCreate(
+            ['title' => 'Implementación de API de facturación', 'requirement_id' => $req1->id],
+            ['description' => 'REST API endpoints para creación/consulta de facturas', 'status' => 'completada', 'tiempo_estimado_horas' => 40, 'tiempo_real_horas' => 42, 'asignado_a' => $dev2->id]
+        );
 
-        Activity::create([
-            'requirement_id' => $req1->id,
-            'title' => 'Pruebas de integración',
-            'description' => 'Testeo End-to-End del módulo de facturación',
-            'status' => 'completada',
-            'tiempo_estimado_horas' => 15,
-            'tiempo_real_horas' => 12,
-            'asignado_a' => $maria->id,
-        ]);
+        $act3 = Activity::firstOrCreate(
+            ['title' => 'Pruebas de integración', 'requirement_id' => $req1->id],
+            ['description' => 'Testeo End-to-End del módulo de facturación', 'status' => 'completada', 'tiempo_estimado_horas' => 15, 'tiempo_real_horas' => 12, 'asignado_a' => $maria->id]
+        );
 
         // ---- Products for req1 activities ----
-        Product::create([
-            'activity_id' => $act1->id,
-            'name' => 'Schema de base de datos',
-            'description' => 'Tablas y relaciones para el módulo de facturación',
-            'type' => 'documento',
-            'version' => '1.0',
-            'created_by' => $dev->id,
-        ]);
+        Product::firstOrCreate(
+            ['activity_id' => $act1->id, 'name' => 'Schema de base de datos'],
+            ['description' => 'Tablas y relaciones para el módulo de facturación', 'type' => 'documento', 'version' => '1.0', 'created_by' => $dev->id]
+        );
 
-        Product::create([
-            'activity_id' => Activity::where('requirement_id', $req1->id)
-                ->where('title', 'Implementación de API de facturación')->first()->id,
-            'name' => 'Facturación API Module v1',
-            'description' => 'Módulo completo de facturación con endpoints REST',
-            'type' => 'codigo',
-            'version' => '1.0.0',
-            'created_by' => $dev2->id,
-        ]);
+        Product::firstOrCreate(
+            ['activity_id' => $act2->id, 'name' => 'Facturación API Module v1'],
+            ['description' => 'Módulo completo de facturación con endpoints REST', 'type' => 'codigo', 'version' => '1.0.0', 'created_by' => $dev2->id]
+        );
 
         // Activities for req2
-        Activity::create([
-            'requirement_id' => $req2->id,
-            'title' => 'Investigación de API del SAT',
-            'description' => 'Documentar endpoints y requerimientos de firma digital',
-            'status' => 'completada',
-            'tiempo_estimado_horas' => 16,
-            'tiempo_real_horas' => 14,
-            'asignado_a' => $dev->id,
-        ]);
+        Activity::firstOrCreate(
+            ['title' => 'Investigación de API del SAT', 'requirement_id' => $req2->id],
+            ['description' => 'Documentar endpoints y requerimientos de firma digital', 'status' => 'completada', 'tiempo_estimado_horas' => 16, 'tiempo_real_horas' => 14, 'asignado_a' => $dev->id]
+        );
 
-        Activity::create([
-            'requirement_id' => $req2->id,
-            'title' => 'Implementación de firma digital',
-            'description' => 'Librería de firma digital para documentos fiscales',
-            'status' => 'completada',
-            'tiempo_estimado_horas' => 30,
-            'tiempo_real_horas' => 28,
-            'asignado_a' => $dev2->id,
-        ]);
+        $act_sat = Activity::firstOrCreate(
+            ['title' => 'Implementación de firma digital', 'requirement_id' => $req2->id],
+            ['description' => 'Librería de firma digital para documentos fiscales', 'status' => 'completada', 'tiempo_estimado_horas' => 30, 'tiempo_real_horas' => 28, 'asignado_a' => $dev2->id]
+        );
 
-        Product::create([
-            'activity_id' => Activity::where('requirement_id', $req2->id)
-                ->where('title', 'Implementación de firma digital')->first()->id,
-            'name' => 'SAT Digital Signer',
-            'description' => 'Librería de firma digital para documentos fiscales',
-            'type' => 'codigo',
-            'version' => '1.2.0',
-            'created_by' => $dev2->id,
-        ]);
+        Product::firstOrCreate(
+            ['activity_id' => $act_sat->id, 'name' => 'SAT Digital Signer'],
+            ['description' => 'Librería de firma digital para documentos fiscales', 'type' => 'codigo', 'version' => '1.2.0', 'created_by' => $dev2->id]
+        );
 
         // Activities for req3
-        Activity::create([
-            'requirement_id' => $req3->id,
-            'title' => 'Diseño UI del dashboard',
-            'description' => 'Wireframes y diseño visual del panel financiero',
-            'status' => 'completada',
-            'tiempo_estimado_horas' => 24,
-            'tiempo_real_horas' => 22,
-            'asignado_a' => $laura->id,
-        ]);
+        Activity::firstOrCreate(
+            ['title' => 'Diseño UI del dashboard', 'requirement_id' => $req3->id],
+            ['description' => 'Wireframes y diseño visual del panel financiero', 'status' => 'completada', 'tiempo_estimado_horas' => 24, 'tiempo_real_horas' => 22, 'asignado_a' => $laura->id]
+        );
 
-        Activity::create([
-            'requirement_id' => $req3->id,
-            'title' => 'Implementación del frontend',
-            'description' => 'Componentes React para el dashboard de ingresos',
-            'status' => 'en_progreso',
-            'tiempo_estimado_horas' => 40,
-            'tiempo_real_horas' => 20,
-            'asignado_a' => $dev2->id,
-        ]);
+        Activity::firstOrCreate(
+            ['title' => 'Implementación del frontend', 'requirement_id' => $req3->id],
+            ['description' => 'Componentes React para el dashboard de ingresos', 'status' => 'en_progreso', 'tiempo_estimado_horas' => 40, 'tiempo_real_horas' => 20, 'asignado_a' => $dev2->id]
+        );
 
         // Activity for req4
-        Activity::create([
-            'requirement_id' => $req4->id,
-            'title' => 'Definición de formatos de reporte',
-            'description' => 'Especificación de formatos Excel y PDF',
-            'status' => 'pendiente',
-            'tiempo_estimado_horas' => 12,
-            'tiempo_real_horas' => 0,
-            'asignado_a' => $pedro->id,
-        ]);
+        Activity::firstOrCreate(
+            ['title' => 'Definición de formatos de reporte', 'requirement_id' => $req4->id],
+            ['description' => 'Especificación de formatos Excel y PDF', 'status' => 'pendiente', 'tiempo_estimado_horas' => 12, 'tiempo_real_horas' => 0, 'asignado_a' => $pedro->id]
+        );
 
         // Development logs
-        DevelopmentLog::create([
-            'activity_id' => Activity::where('requirement_id', $req1->id)
-                ->where('title', 'Implementación de API de facturación')->first()->id,
-            'developer_name' => 'Carlos López',
-            'developer_email' => 'carlos@dev.com',
-            'tipo_accion' => 'commit',
-            'descripcion' => 'API endpoints para creación y consulta de facturas',
-            'tiempo_gastado_minutos' => 480,
-            'fecha_registro' => now(),
-            'link_o_ref' => 'https://github.com/company/facturacion/commit/abc123',
-        ]);
+        DevelopmentLog::firstOrCreate(
+            ['activity_id' => $act2->id, 'developer_name' => 'Carlos López', 'descripcion' => 'API endpoints para creación y consulta de facturas'],
+            ['developer_email' => 'carlos@dev.com', 'tipo_accion' => 'commit', 'tiempo_gastado_minutos' => 480, 'fecha_registro' => now(), 'link_o_ref' => 'https://github.com/company/facturacion/commit/abc123', 'developer_id' => $dev2->id]
+        );
 
-        DevelopmentLog::create([
-            'activity_id' => Activity::where('requirement_id', $req1->id)
-                ->where('title', 'Diseño de base de datos de facturas')->first()->id,
-            'developer_name' => 'Ana García',
-            'developer_email' => 'ana@dev.com',
-            'tipo_accion' => 'feature',
-            'descripcion' => 'Tablas facturas, conceptos, usuarios',
-            'tiempo_gastado_minutos' => 360,
-            'fecha_registro' => now(),
-            'link_o_ref' => 'https://github.com/company/facturacion/commit/def456',
-        ]);
+        DevelopmentLog::firstOrCreate(
+            ['activity_id' => $act1->id, 'developer_name' => 'Ana García', 'descripcion' => 'Tablas facturas, conceptos, usuarios'],
+            ['developer_email' => 'ana@dev.com', 'tipo_accion' => 'feature', 'tiempo_gastado_minutos' => 360, 'fecha_registro' => now(), 'link_o_ref' => 'https://github.com/company/facturacion/commit/def456', 'developer_id' => $dev->id]
+        );
 
         // ---- Requirements for Project 2 ----
         Requirement::firstOrCreate(

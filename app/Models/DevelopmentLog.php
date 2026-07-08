@@ -24,7 +24,7 @@ class DevelopmentLog extends Model
 
     protected $casts = [
         'tiempo_gastado_minutos' => 'float',
-        'fecha_registro' => 'datetime',
+        'fecha_registro' => 'date',
     ];
 
     // ----- Relationships -----
