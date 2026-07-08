@@ -13,7 +13,8 @@ RUN apk add --no-cache \
     zip \
     unzip \
     postgresql-libs \
-    postgresql-dev
+    postgresql-dev \
+    linux-headers
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
