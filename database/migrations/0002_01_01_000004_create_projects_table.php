@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('git_repo_url')->nullable();
+            $table->string('client_name')->nullable();
             $table->string('status')->default('planificacion');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

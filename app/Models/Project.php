@@ -15,6 +15,7 @@ class Project extends Model
         'name',
         'description',
         'git_repo_url',
+        'client_name',
         'status',
         'start_date',
         'end_date',

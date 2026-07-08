@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +14,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Define basic policy gates
         Gate::define('manage-project', function ($user, $project) {
             return true;
         });
@@ -25,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
-        // API version in responses
+        $this->loadViewsFrom(resource_path('views'), 'pmapi');
     }
 }

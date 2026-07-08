@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Activity extends Model
 {
@@ -40,9 +41,9 @@ class Activity extends Model
         return $this->belongsTo(Requirement::class);
     }
 
-    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function project(): HasOneThrough
     {
-        return $this->belongsTo(Project::class)->via('requirement');
+        return $this->hasOneThrough(Project::class, Requirement::class, 'id', 'id', 'requirement_id', 'project_id');
     }
 
     public function products(): HasMany
