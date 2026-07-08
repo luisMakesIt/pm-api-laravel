@@ -201,7 +201,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Tablas y relaciones para el módulo de facturación',
             'type' => 'documento',
             'version' => '1.0',
-            'created_by' => 'Ana García',
+            'created_by' => $dev->id,
         ]);
 
         Product::create([
@@ -211,7 +211,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Módulo completo de facturación con endpoints REST',
             'type' => 'codigo',
             'version' => '1.0.0',
-            'created_by' => 'Carlos López',
+            'created_by' => $dev2->id,
         ]);
 
         // Activities for req2
@@ -242,7 +242,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Librería de firma digital para documentos fiscales',
             'type' => 'codigo',
             'version' => '1.2.0',
-            'created_by' => 'Carlos López',
+            'created_by' => $dev2->id,
         ]);
 
         // Activities for req3
