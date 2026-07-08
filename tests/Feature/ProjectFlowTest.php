@@ -114,7 +114,7 @@ class ProjectFlowTest extends TestCase
 
         $response->assertStatus(200);
         // 1 of 3 completed = 33.33%
-        $this->assertEquals(33.33, round($response->json('progreso'), 2));
+        $this->assertEquals(33.33, round($response->json('data.progreso'), 2));
     }
 
     public function test_dashboard_stats_endpoint(): void
@@ -126,6 +126,10 @@ class ProjectFlowTest extends TestCase
         $response = $this->withHeaders($header)->getJson('/api/dashboard/stats');
 
         $response->assertStatus(200)
-            ->assertJsonStructure(['projects_total', 'projects_active', 'requirements_total', 'activities_total']);
+            ->assertJsonPath('success', true)
+            ->assertJsonStructure([
+                'success',
+                'data' => ['total_projects', 'active_projects', 'total_requirements', 'total_activities'],
+            ]);
     }
 }

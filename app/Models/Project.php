@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Project extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $appends = ['progreso'];
 
     protected $fillable = [
         'name',
@@ -35,9 +38,9 @@ class Project extends Model
         return $this->hasMany(Requirement::class);
     }
 
-    public function activities(): HasMany
+    public function activities(): HasManyThrough
     {
-        return $this->hasMany(Activity::class);
+        return $this->hasManyThrough(Activity::class, Requirement::class);
     }
 
     public function teamMembers(): HasMany

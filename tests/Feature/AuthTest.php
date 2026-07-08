@@ -31,7 +31,11 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-            ->assertJsonStructure(['token', 'user']);
+            ->assertJsonPath('success', true)
+            ->assertJsonStructure([
+                'success',
+                'data' => ['token', 'user'],
+            ]);
     }
 
     public function test_login_with_invalid_credentials(): void
@@ -58,7 +62,8 @@ class AuthTest extends TestCase
             ->getJson('/api/auth/me');
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['id' => $user->id]);
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.id', (string) $user->id);
     }
 
     public function test_unauthenticated_user_cannot_access_projects(): void
