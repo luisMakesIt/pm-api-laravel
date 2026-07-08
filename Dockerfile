@@ -5,7 +5,7 @@ RUN apk add --no-cache \
     nginx \
     git \
     curl \
-    libpng16-dev \
+    libpng-dev \
     jpeg-dev \
     freetype-dev \
     oniguruma-dev \
