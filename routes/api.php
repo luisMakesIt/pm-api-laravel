@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\RequirementController;
 use App\Http\Controllers\Api\RequirementActaController;
@@ -11,9 +12,19 @@ use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\HealthController;
 
+// Health check — no auth required
 Route::get('/health', [HealthController::class, 'status']);
 
-Route::middleware(['api', 'auth:sanctum'])->prefix('v1')->group(function () {
+// Auth — no auth required
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+// API v1 — requires auth
+Route::middleware(['api', 'auth:sanctum'])->group(function () {
+
+    // ---- Dashboard ----
+    Route::get('/dashboard/stats', [ProjectController::class, 'dashboardStats']);
 
     // ---- Projects ----
     Route::apiResource('projects', ProjectController::class);

@@ -1,0 +1,3 @@
+## Migrate
+	@echo "📋 Running database migrations..."
+	docker-compose exec app php artisan migrate

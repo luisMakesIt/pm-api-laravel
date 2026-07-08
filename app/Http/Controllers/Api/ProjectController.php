@@ -9,6 +9,28 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     /**
+     * Dashboard statistics across all projects.
+     * GET /api/dashboard/stats
+     */
+    public function dashboardStats(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
+    {
+        $stats = [
+            'total_projects' => \App\Models\Project::count(),
+            'active_projects' => \App\Models\Project::whereIn('status', ['planificacion', 'en_desarrollo', 'en_pruebas'])->count(),
+            'completed_projects' => \App\Models\Project::where('status', 'completado')->count(),
+            'total_requirements' => \App\Models\Requirement::count(),
+            'completed_requirements' => \App\Models\Requirement::where('status', 'completado')->count(),
+            'pending_requirements' => \App\Models\Requirement::where('status', 'pendiente')->count(),
+            'total_activities' => \App\Models\Activity::count(),
+            'activities_completed' => \App\Models\Activity::where('status', 'completada')->count(),
+            'total_team_members' => \App\Models\TeamMember::count(),
+            'total_dev_logs' => \App\Models\DevelopmentLog::count(),
+        ];
+
+        return response()->json(['success' => true, 'data' => $stats]);
+    }
+
+    /**
      * Display a listing of projects.
      * GET /api/projects
      */

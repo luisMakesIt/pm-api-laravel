@@ -1,0 +1,3 @@
+## Logs
+	@echo "📋 Showing app logs..."
+	docker-compose logs -f app

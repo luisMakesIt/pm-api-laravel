@@ -1,0 +1,10 @@
+## Setup
+	@echo "🚀 Initializing PM API..."
+	@if [ ! -f .env ]; then cp .env.example .env; echo "✅ .env created from .env.example"; else echo "✅ .env already exists"; fi
+	@composer install --no-interaction --optimize-autoloader
+	@php artisan key:generate
+	@echo ""
+	@echo "📝 Please check your .env file for database and Redis configuration."
+	@echo "📝 Then run: make migrate or make migrate:fresh"
+	@echo ""
+	@echo "🌟 Ready! Start with: docker-compose up -d app"

@@ -1,0 +1,6 @@
+## Up
+	@echo "🚀 Starting services..."
+	docker-compose up -d app db redis
+	@echo ""
+	@echo "✅ Services started. Check with: docker-compose ps"
+	@echo "📋 API health: curl http://localhost:8080/api/health"
