@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('tiempo_estimado_horas', 8, 2)->default(0);
             $table->decimal('tiempo_real_horas', 8, 2)->default(0);
             $table->unsignedBigInteger('asignado_a')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
