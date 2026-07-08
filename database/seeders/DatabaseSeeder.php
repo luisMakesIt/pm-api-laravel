@@ -286,6 +286,7 @@ class DatabaseSeeder extends Seeder
             'tipo_accion' => 'commit',
             'descripcion' => 'API endpoints para creación y consulta de facturas',
             'tiempo_gastado_minutos' => 480,
+            'fecha_registro' => now(),
             'link_o_ref' => 'https://github.com/company/facturacion/commit/abc123',
         ]);
 
@@ -297,6 +298,7 @@ class DatabaseSeeder extends Seeder
             'tipo_accion' => 'feature',
             'descripcion' => 'Tablas facturas, conceptos, usuarios',
             'tiempo_gastado_minutos' => 360,
+            'fecha_registro' => now(),
             'link_o_ref' => 'https://github.com/company/facturacion/commit/def456',
         ]);
 
