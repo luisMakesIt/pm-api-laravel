@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputOption;
+
+define('LARAVEL_START', microtime(true));
+
+$argv = $_SERVER['argv'] ?? [];
+array_shift($argv);
+array_unshift($argv, 'pm-api-laravel');
+$argv = $argv ? $argv : ['pm-api-laravel'];
+
+/* Register the Composer Autoloader */
+$autoloadFiles = [
+    __DIR__.'/vendor/autoload.php',
+    __DIR__.'/bootstrap/autoload.php',
+];
+
+$autoloaded = false;
+foreach ($autoloadFiles as $file) {
+    if (file_exists($file)) {
+        require $file;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, 'Autoload file not found. Did you run composer install?' . PHP_EOL);
+    exit(1);
+}
+
+/* Create the Laravel Application */
+$laravel = require __DIR__.'/bootstrap/app.php';
+
+$kernel = $laravel->make(Illuminate\Contracts\Console\Kernel::class);
+
+$status = $kernel->handle(
+    $input = new ArgvInput,
+    new Symfony\Component\Console\Output\ConsoleOutput
+);
+
+/* Shutdown the application */
+$kernel->terminate($input, $status);
+
+exit($status);
