@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller as BaseController;
+use App\Http\Controllers\Controller as RootBaseController;
 
-class BaseController extends BaseController
+class BaseController extends RootBaseController
 {
     //
 }

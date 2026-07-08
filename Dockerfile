@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine3.20
+FROM php:8.4-fpm-alpine3.20
 
 # Install dependencies (Alpine 3.20 package names)
 RUN apk add --no-cache \
@@ -14,11 +14,12 @@ RUN apk add --no-cache \
     unzip \
     postgresql-libs \
     postgresql-dev \
-    linux-headers
+    linux-headers \
+    libzip-dev
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_pgsql sockets
+    && docker-php-ext-install gd pdo pdo_pgsql sockets zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
