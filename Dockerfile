@@ -30,15 +30,15 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
+# Create required Laravel directories before composer install
+RUN mkdir -p /var/www/html/bootstrap/cache /var/www/html/storage/framework/{sessions,views,cache,packages} \
+    && chmod -R 777 /var/www/html/bootstrap/cache /var/www/html/storage
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # Configure Nginx
-RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-    && mkdir -p /var/www/html/storage/framework/{sessions,views,cache,packages} \
-    && chmod -R 775 /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/bootstrap/cache
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 # Nginx config for Laravel
 RUN cat > /etc/nginx/http.d/default.conf <<'NGINX'
