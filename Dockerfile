@@ -1,19 +1,19 @@
 FROM php:8.3-fpm-alpine3.20
 
-# Install dependencies
+# Install dependencies (Alpine 3.20 package names)
 RUN apk add --no-cache \
     nginx \
     git \
     curl \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype-dev \
+    libpng16-dev \
+    jpeg-dev \
+    freetype-dev \
     oniguruma-dev \
     libxml2-dev \
     zip \
     unzip \
-    postgresql-dev \
-    redis-dev
+    postgresql-libs \
+    postgresql-dev
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
