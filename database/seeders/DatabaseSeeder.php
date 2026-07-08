@@ -44,6 +44,34 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Users for activity assignments (TeamMembers who are not Users above)
+        $maria = User::firstOrCreate(
+            ['email' => 'maria@qa.com'],
+            [
+                'name' => 'María Torres',
+                'password' => bcrypt('qa123'),
+                'role' => 'tester',
+            ]
+        );
+
+        $laura = User::firstOrCreate(
+            ['email' => 'laura@design.com'],
+            [
+                'name' => 'Laura Sánchez',
+                'password' => bcrypt('design123'),
+                'role' => 'designer',
+            ]
+        );
+
+        $pedro = User::firstOrCreate(
+            ['email' => 'pedro@lead.com'],
+            [
+                'name' => 'Pedro Ruiz',
+                'password' => bcrypt('lead123'),
+                'role' => 'tech_lead',
+            ]
+        );
+
         // ---- Projects ----
         $project1 = Project::firstOrCreate(
             ['name' => 'Sistema de Facturación'],
@@ -143,7 +171,7 @@ class DatabaseSeeder extends Seeder
         // ---- Activities for req1 ----
         $act1 = Activity::firstOrCreate(
             ['title' => 'Diseño de base de datos de facturas', 'requirement_id' => $req1->id],
-            ['description' => 'Tablas y relaciones para el módulo de facturación', 'status' => 'completada', 'tiempo_estimado_horas' => 20, 'tiempo_real_horas' => 18, 'asignado_a' => 'Ana García']
+            ['description' => 'Tablas y relaciones para el módulo de facturación', 'status' => 'completada', 'tiempo_estimado_horas' => 20, 'tiempo_real_horas' => 18, 'asignado_a' => $dev->id]
         );
 
         Activity::create([
@@ -153,7 +181,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'completada',
             'tiempo_estimado_horas' => 40,
             'tiempo_real_horas' => 42,
-            'asignado_a' => 'Carlos López',
+            'asignado_a' => $dev2->id,
         ]);
 
         Activity::create([
@@ -163,7 +191,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'completada',
             'tiempo_estimado_horas' => 15,
             'tiempo_real_horas' => 12,
-            'asignado_a' => 'María Torres',
+            'asignado_a' => $maria->id,
         ]);
 
         // ---- Products for req1 activities ----
@@ -194,7 +222,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'completada',
             'tiempo_estimado_horas' => 16,
             'tiempo_real_horas' => 14,
-            'asignado_a' => 'Ana García',
+            'asignado_a' => $dev->id,
         ]);
 
         Activity::create([
@@ -204,7 +232,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'completada',
             'tiempo_estimado_horas' => 30,
             'tiempo_real_horas' => 28,
-            'asignado_a' => 'Carlos López',
+            'asignado_a' => $dev2->id,
         ]);
 
         Product::create([
@@ -225,7 +253,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'completada',
             'tiempo_estimado_horas' => 24,
             'tiempo_real_horas' => 22,
-            'asignado_a' => 'Laura Sánchez',
+            'asignado_a' => $laura->id,
         ]);
 
         Activity::create([
@@ -235,7 +263,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'en_progreso',
             'tiempo_estimado_horas' => 40,
             'tiempo_real_horas' => 20,
-            'asignado_a' => 'Carlos López',
+            'asignado_a' => $dev2->id,
         ]);
 
         // Activity for req4
@@ -246,7 +274,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'pendiente',
             'tiempo_estimado_horas' => 12,
             'tiempo_real_horas' => 0,
-            'asignado_a' => 'Pedro Ruiz',
+            'asignado_a' => $pedro->id,
         ]);
 
         // Development logs
