@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@pmsystem.com'],
             [
                 'name' => 'Admin User',
-                'password' => bcrypt('admin123'),
+                'password' => bcrypt(env('ADMIN_PASSWORD', 'admin123')),
                 'role' => 'admin',
             ]
         );
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'ana@dev.com'],
             [
                 'name' => 'Ana García',
-                'password' => bcrypt('dev123'),
+                'password' => bcrypt(env('DEV_PASSWORD', 'dev123')),
                 'role' => 'dev',
             ]
         );
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'carlos@dev.com'],
             [
                 'name' => 'Carlos López',
-                'password' => bcrypt('dev123'),
+                'password' => bcrypt(env('DEV_PASSWORD', 'dev123')),
                 'role' => 'dev',
             ]
         );
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'maria@qa.com'],
             [
                 'name' => 'María Torres',
-                'password' => bcrypt('qa123'),
+                'password' => bcrypt(env('QA_PASSWORD', 'qa123')),
                 'role' => 'tester',
             ]
         );
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'laura@design.com'],
             [
                 'name' => 'Laura Sánchez',
-                'password' => bcrypt('design123'),
+                'password' => bcrypt(env('DESIGNER_PASSWORD', 'design123')),
                 'role' => 'designer',
             ]
         );
@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'pedro@lead.com'],
             [
                 'name' => 'Pedro Ruiz',
-                'password' => bcrypt('lead123'),
+                'password' => bcrypt(env('LEAD_PASSWORD', 'lead123')),
                 'role' => 'tech_lead',
             ]
         );
