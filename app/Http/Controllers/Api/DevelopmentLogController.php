@@ -34,16 +34,16 @@ class DevelopmentLogController extends Controller
 
         $data['activity_id'] = $activity->id;
         $user = auth()->user();
-        if (!$data['developer_id'] && $user) {
+        if (empty($data['developer_id']) && $user) {
             $data['developer_id'] = $user->id;
-            if (!$data['developer_name']) {
+            if (empty($data['developer_name'])) {
                 $data['developer_name'] = $user->name;
             }
-            if (!$data['developer_email']) {
+            if (empty($data['developer_email'])) {
                 $data['developer_email'] = $user->email;
             }
         }
-        if (!$data['fecha_registro']) {
+        if (empty($data['fecha_registro'])) {
             $data['fecha_registro'] = now()->format('Y-m-d');
         }
 
