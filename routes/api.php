@@ -23,6 +23,11 @@ Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:sanctum'
 // API v1 — requires auth
 Route::middleware(['api', 'auth:sanctum'])->group(function () {
 
+    // ---- Auth profile / password ----
+    Route::get('/auth/profile', [AuthController::class, 'profile']);
+    Route::put('/auth/profile', [AuthController::class, 'updateProfile']);
+    Route::put('/auth/password', [AuthController::class, 'changePassword']);
+
     // ---- Dashboard ----
     Route::get('/dashboard/stats', [ProjectController::class, 'dashboardStats']);
 
